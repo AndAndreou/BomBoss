@@ -88,6 +88,7 @@
     <Compile Include="Assets\Prefabs\HoverCar\Scripts\TurbineRotation.cs" />
     <Compile Include="Assets\Scripts\SergiosSceneBomb\BombController.cs" />
     <Compile Include="Assets\Scripts\SergiosSceneBomb\GameManagerBomb.cs" />
+    <Compile Include="Assets\Scripts\SergiosSceneBomb\VoidController.cs" />
     <Compile Include="Assets\_scripts\Camera.cs" />
     <Compile Include="Assets\_scripts\CameraSmoothFollow.cs" />
     <Compile Include="Assets\_scripts\CharacterControler.cs" />
