@@ -73,6 +73,18 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Prefabs\HoverCar\Scripts\CameraHandle.cs" />
@@ -86,15 +98,20 @@
     <Compile Include="Assets\Prefabs\HoverCar\Scripts\MovementEngine.cs" />
     <Compile Include="Assets\Prefabs\HoverCar\Scripts\SideDependentDrag.cs" />
     <Compile Include="Assets\Prefabs\HoverCar\Scripts\TurbineRotation.cs" />
+    <Compile Include="Assets\Scripts\Attach.cs" />
+    <Compile Include="Assets\Scripts\BombHover.cs" />
+    <Compile Include="Assets\Scripts\Enums\PowerUpType.cs" />
+    <Compile Include="Assets\Scripts\GameRepository.cs" />
+    <Compile Include="Assets\Scripts\MichalisScene\CameraSmoothFollow.cs" />
+    <Compile Include="Assets\Scripts\MichalisScene\PowerUps.cs" />
+    <Compile Include="Assets\Scripts\MichalisScene\ShipController.cs" />
+    <Compile Include="Assets\Scripts\MichalisScene\ShipStatus.cs" />
+    <Compile Include="Assets\Scripts\MichalisScene\shot.cs" />
+    <Compile Include="Assets\Scripts\PowerUp.cs" />
     <Compile Include="Assets\Scripts\SergiosSceneBomb\BombController.cs" />
     <Compile Include="Assets\Scripts\SergiosSceneBomb\GameManagerBomb.cs" />
     <Compile Include="Assets\Scripts\SergiosSceneBomb\VoidController.cs" />
-    <Compile Include="Assets\_scripts\Camera.cs" />
-    <Compile Include="Assets\_scripts\CameraSmoothFollow.cs" />
-    <Compile Include="Assets\_scripts\CharacterControler.cs" />
-    <Compile Include="Assets\_scripts\CharacterStatus.cs" />
-    <Compile Include="Assets\_scripts\Void.cs" />
-    <Compile Include="Assets\_scripts\shot.cs" />
+    <Compile Include="Assets\Scripts\magnet.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -42,7 +42,7 @@ public class ShipStatus : MonoBehaviour {
 
     void FixedUpdate()
     {
-
+        /*
         //Check input from user to activate the power-ups
         if (Input.GetKeyDown("b") && hasBoost)
         {
@@ -62,11 +62,11 @@ public class ShipStatus : MonoBehaviour {
             print("M key was pressed, activated shield");
             StartCoroutine(shieldMe());
         }
-
+        */
     }//END OF FIXED UPDATE
 
 
-    //Used to substruct health from the player and check if his HP reaches zero
+    //Used to substract health from the player and check if his HP reaches zero
     public void applyDamage(float damage)
     {
         currHealth -= damage;
@@ -122,8 +122,29 @@ public class ShipStatus : MonoBehaviour {
         hasShield = false;
     }//End of shieldME IEnumerator
 
-
-
+    //get a power up
+    public void GetPowerUp(PowerUpType powerUp, float value)
+    {
+        switch (powerUp)
+        {
+            case PowerUpType.health:
+                currHealth += value;
+                Debug.Log("Health: " + currHealth);
+                break;
+            case PowerUpType.shield:
+                currShieldHealth += value;
+                Debug.Log("Shield: " + currShieldHealth);
+                break;
+            case PowerUpType.jump:
+                jumpsLeft += value;
+                Debug.Log("Jump: " + jumpsLeft);
+                break;
+            case PowerUpType.boost:
+                boostDuration += value;
+                Debug.Log("Boost: " + boostDuration);
+                break;
+        }
+    }
 
 
 }

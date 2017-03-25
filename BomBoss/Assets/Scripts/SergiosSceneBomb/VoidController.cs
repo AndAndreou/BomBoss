@@ -2,26 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VoidController : MonoBehaviour {
+public class VoidController : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-    void OnTriggerEnter (Collider other)
+
+    // Use this for initialization
+    void Start()
     {
-        MyLog(string.Format("Collided with: {0}", other.name));
-        BombController bomb = other.GetComponent<BombController>();
 
-        if (bomb!= null)
+    }
+
+    void Update()
+    {
+
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        //MyLog(string.Format("Collided with: {0}", other.name));
+
+        if (other.tag == GameRepository.bombTag)
         {
-            bomb.VoidCollided();
+            BombController bomb = other.GetComponent<BombController>();
+
+            if (bomb != null)
+            {
+                bomb.VoidCollided();
+            }
+
+        }
+
+        if (other.tag == GameRepository.hovercraftTag)
+        {
+            MyLog(string.Format("Collided with: {0}", other.tag));
+            GameObject ship = GameObject.Find("HoverCar");
+            if (ship != null)
+            {
+                ship.GetComponent<ShipController>().Die();
+            }
         }
     }
 

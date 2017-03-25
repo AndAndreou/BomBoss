@@ -7,10 +7,14 @@ public class ShipController : MonoBehaviour {
     //for firing
     public GameObject shot;
     public Transform shotSpawn;
-    public float fireRate, nextFire;
-    public int overheatRate, overheatTotal;
+    public float fireRate;
+    public int overheatRate;
+    public float overheatTotal;
+    public int maxOverheat = 100;
     public float cooldownRate;
-    public bool isOverheated = false;
+
+    private bool isOverheated = false;
+    private float nextFire;
 
     public Transform shipSpawn; // Spawn position
 
@@ -32,9 +36,9 @@ public class ShipController : MonoBehaviour {
             overheatTotal += overheatRate; //Everytime the cannon fires, it's heat rises
 
             //check if the cannon has reached maximum overheat and needs to cool down
-            if (overheatTotal >= 100)
+            if (overheatTotal >= maxOverheat)
             {
-                overheatTotal = 100;
+                overheatTotal = maxOverheat;
                 isOverheated = true;
             }
         }
@@ -62,7 +66,7 @@ public class ShipController : MonoBehaviour {
     //used for cannon mechanics
     void cannonCooldown()
     {
-        overheatTotal -= 10;//reduce the overheat every second
+        overheatTotal -= cooldownRate;//reduce the overheat every second
         //When overheat reaches 0 (or below 0) then set the counter to 0 and change the flag. Player can now fire again
         if (overheatTotal <= 0)
         {
@@ -70,6 +74,5 @@ public class ShipController : MonoBehaviour {
             isOverheated = false; // not the player can shoot with the cannon again
         }
     }
-
 
 }//END OF MONOBEHAVOUR

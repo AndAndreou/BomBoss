@@ -79,7 +79,7 @@ public class BombController : MonoBehaviour {
     public GameObject gameManager;
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         currentState.state = BombState.statePaused;
         UpdateUI();
 	}
@@ -286,18 +286,20 @@ public class BombController : MonoBehaviour {
         UpdateUI();
 	}
 
-    void FixedUpdate ()
-    {
-        if (currentState.state == BombState.stateArmed) // Bomb can move only when armed
-        {
-            // Movement of bomb (only necessary for testing)
-            float moveHorizontal = Input.GetAxis("Horizontal");
-            float moveVertical = Input.GetAxis("Vertical");
+    //void fixedupdate ()
+    //{
 
-            Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-            GetComponent<Rigidbody>().AddForce(movement * 10);
-        }
-    }
+    //    if (currentstate.state == bombstate.statearmed) // bomb can move only when armed
+    //    {
+
+    //        // movement of bomb (only necessary for testing)
+    //        float movehorizontal = input.getaxis("horizontal");
+    //        float movevertical = input.getaxis("vertical");
+
+    //        vector3 movement = new vector3(movehorizontal, 0.0f, movevertical);
+    //        getcomponent<rigidbody>().addforce(movement * 10);
+    //    }
+    //}
 
     void UpdateUI ()
     {

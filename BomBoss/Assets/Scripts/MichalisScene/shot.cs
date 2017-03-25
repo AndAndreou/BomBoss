@@ -10,7 +10,7 @@ public class shot : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        Vector3 fireAhead = new Vector3(0,0,1);
+        Vector3 fireAhead = this.transform.forward;
         GetComponent<Rigidbody>().velocity = fireAhead * shotSpeed;
     }
 
