@@ -1,0 +1,153 @@
+fileFormatVersion: 2
+guid: 92578d1bda21b714d8642806472cb450
+timeCreated: 1490455132
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: blu_door_1
+    100004: blu_door_2
+    100006: blu_door_3
+    100008: blu_elevato_l
+    100010: blu_elevato_r
+    100012: centreship
+    100014: red_door_1
+    100016: red_door_2
+    100018: red_door_3
+    100020: red_elevato_l
+    100022: red_elevato_r
+    100024: ringblu
+    100026: ringcent
+    100028: ringred
+    100030: sideship
+    400000: //RootNode
+    400002: blu_door_1
+    400004: blu_door_2
+    400006: blu_door_3
+    400008: blu_elevato_l
+    400010: blu_elevato_r
+    400012: centreship
+    400014: red_door_1
+    400016: red_door_2
+    400018: red_door_3
+    400020: red_elevato_l
+    400022: red_elevato_r
+    400024: ringblu
+    400026: ringcent
+    400028: ringred
+    400030: sideship
+    2300000: blu_door_1
+    2300002: blu_door_2
+    2300004: blu_door_3
+    2300006: blu_elevato_l
+    2300008: blu_elevato_r
+    2300010: centreship
+    2300012: red_door_1
+    2300014: red_door_2
+    2300016: red_door_3
+    2300018: red_elevato_l
+    2300020: red_elevato_r
+    2300022: ringblu
+    2300024: ringcent
+    2300026: ringred
+    2300028: sideship
+    3300000: blu_door_1
+    3300002: blu_door_2
+    3300004: blu_door_3
+    3300006: blu_elevato_l
+    3300008: blu_elevato_r
+    3300010: centreship
+    3300012: red_door_1
+    3300014: red_door_2
+    3300016: red_door_3
+    3300018: red_elevato_l
+    3300020: red_elevato_r
+    3300022: ringblu
+    3300024: ringcent
+    3300026: ringred
+    3300028: sideship
+    4300000: red_door_3
+    4300002: red_door_2
+    4300004: red_door_1
+    4300006: blu_elevato_r
+    4300008: blu_elevato_l
+    4300010: blu_door_3
+    4300012: blu_door_2
+    4300014: blu_door_1
+    4300016: red_elevato_r
+    4300018: red_elevato_l
+    4300020: ringred
+    4300022: ringcent
+    4300024: ringblu
+    4300026: sideship
+    4300028: centreship
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 600
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
