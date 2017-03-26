@@ -121,6 +121,7 @@
     <None Include="Assets\Packages\UnityParticlePack\Standard Assets\Effects\Bloom\Resources\Bloom.shader" />
     <None Include="Assets\Packages\UnityParticlePack\Standard Assets\Effects\LensAberrations\Resources\LensAberrations.shader" />
     <None Include="Assets\Readme.txt" />
+    <None Include="Assets\Shaders\Additive_Base.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -82,12 +82,12 @@ public class BombController : MonoBehaviour {
             MyLog("Invalid bomb state transition");
         }
 
-        //// Special validations
-        //if (newState == BombState.armed && gameManager.GetComponent<GameManagerBomb>().currentState == RoundState.finished)
-        //{
-        //    // If round ended don't allow re-arming of bomb
-        //    return;
-        //}
+        // Special validations
+        if (newState == BombState.armed && gameManager.GetComponent<GameManagerBomb>().currentState == RoundState.finished)
+        {
+            // If round ended don't allow re-arming of bomb
+            return;
+        }
 
         // Store the previousState
         BombState previousState = currentState;
