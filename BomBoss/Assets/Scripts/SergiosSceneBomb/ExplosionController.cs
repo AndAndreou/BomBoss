@@ -59,4 +59,15 @@ public class ExplosionController : MonoBehaviour {
             ps.Pause();
         }
     }
+
+    public void StopEffect()
+    {
+        // Self
+        myPS.Stop();
+        // Children
+        foreach (ParticleSystem ps in childrenPS)
+        {
+            ps.Stop();
+        }
+    }
 }

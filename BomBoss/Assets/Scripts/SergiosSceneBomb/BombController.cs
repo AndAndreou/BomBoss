@@ -105,6 +105,12 @@ public class BombController : MonoBehaviour {
                 currentExplodeTime = Random.Range(minBombExplodeTime, maxBombExplodeTime);
                 currentExplodeTimeYellow = ((float)currentExplodeTime) / 3; // One third
                 currentExplodeTimeRed = currentExplodeTimeYellow * 2; // Two thirds
+
+                if (previousState == BombState.exploded)
+                {
+                    ResetToSpawnPoint();
+                }
+
                 gameObject.GetComponent<Renderer>().enabled = true;
             }
             else
@@ -116,21 +122,24 @@ public class BombController : MonoBehaviour {
         {
             MyLog(newState.ToString());
             gameObject.GetComponent<Renderer>().enabled = false;
-            explosionEffect.GetComponent<ParticleSystem>().Play();
+            explosionEffect.GetComponent<ExplosionController>().PlayEffect();
+            //explosionEffect.GetComponent<ParticleSystem>().Play();
             //Debug.Log("Looping: " + explosionEffect.GetComponent<ParticleSystem>().main.loop);
             StopMovement();
         }
         else if (newState == BombState.exploded)
         {
             MyLog(newState.ToString());
-            explosionEffect.GetComponent<ParticleSystem>().Stop();
+            explosionEffect.GetComponent<ExplosionController>().StopEffect();
+            //explosionEffect.GetComponent<ParticleSystem>().Stop(); // Not needed because I disabled looping in all particle systems
         }
         else if (newState == BombState.paused)
         {
             MyLog(newState.ToString());
             if (beforePauseState == BombState.exploding)
             {
-                explosionEffect.GetComponent<ParticleSystem>().Pause();// playbackSpeed = 0f;
+                explosionEffect.GetComponent<ExplosionController>().PauseEffect();
+                //explosionEffect.GetComponent<ParticleSystem>().Pause();// playbackSpeed = 0f;
             }
         }
         else if (newState == BombState.unPausing)
@@ -138,7 +147,8 @@ public class BombController : MonoBehaviour {
             MyLog(newState.ToString());
             if (beforePauseState == BombState.exploding)
             {
-                explosionEffect.GetComponent<ParticleSystem>().Play(); // playbackSpeed = 1f;
+                explosionEffect.GetComponent<ExplosionController>().PlayEffect();
+                //explosionEffect.GetComponent<ParticleSystem>().Play(); // playbackSpeed = 1f;
             }
             unpausing = true;
             SetState(beforePauseState);
@@ -185,6 +195,11 @@ public class BombController : MonoBehaviour {
     }
 
     public void VoidCollided()
+    {
+        ResetToSpawnPoint();
+    }
+
+    void ResetToSpawnPoint()
     {
         // Hide bomb and disable collider
         this.GetComponent<Renderer>().enabled = false;
@@ -252,18 +267,18 @@ public class BombController : MonoBehaviour {
         UpdateUI();
 	}
 
-    //void fixedupdate ()
+    //void FixedUpdate()
     //{
 
-    //    if (currentstate.state == bombstate.statearmed) // bomb can move only when armed
+    //    if (currentState == BombState.armed) // bomb can move only when armed
     //    {
 
     //        // movement of bomb (only necessary for testing)
-    //        float movehorizontal = input.getaxis("horizontal");
-    //        float movevertical = input.getaxis("vertical");
+    //        float movehorizontal = Input.GetAxis("Horizontal");
+    //        float movevertical = Input.GetAxis("Vertical");
 
-    //        vector3 movement = new vector3(movehorizontal, 0.0f, movevertical);
-    //        getcomponent<rigidbody>().addforce(movement * 10);
+    //        Vector3 movement = new Vector3(movehorizontal, 0.0f, movevertical);
+    //        GetComponent<Rigidbody>().AddForce(movement * 10);
     //    }
     //}
 
