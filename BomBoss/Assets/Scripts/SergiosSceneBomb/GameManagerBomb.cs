@@ -3,57 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RoundState
-{
-    public const int stateStarting = 0;
-    public const int stateRunning = 1;
-    public const int statePaused = 2;
-    public const int stateUnPausing = 3;
-    public const int stateFinished = 4;
-
-    public int state;
-
-    public RoundState()
-    {
-
-    }
-
-    public RoundState(int newState)
-    {
-        state = newState;
-    }
-
-    public override string ToString()
-    {
-        string msg = "";
-        if (state == stateStarting)
-        {
-            msg = "STARTING";
-        }
-        else if (state == stateRunning)
-        {
-            msg = "RUNNING";
-        }
-        else if (state == statePaused)
-        {
-            msg = "PAUSED";
-        }
-        else if (state == stateUnPausing)
-        {
-            msg = "UNPAUSING";
-        }
-        else if (state == stateFinished)
-        {
-            msg = "FINISHED";
-        }
-        else
-        {
-            msg = "UNKNOWN";
-        }
-        return msg;
-    }
-}
-
 public class GameManagerBomb : MonoBehaviour {
 
     public GameObject bomb;
@@ -65,13 +14,13 @@ public class GameManagerBomb : MonoBehaviour {
     public int maxRoundTime = 120; // secs
     public float timeElapsed;
 
-    public RoundState currentState = new RoundState(); // Can be STARTING, RUNNING, PAUSED, FINISHED
+    public RoundState currentState = RoundState.finished; // Can be STARTING, RUNNING, PAUSED, FINISHED
 
     // Use this for initialization
     void Start () {
         offset = transform.position - bomb.transform.position;
-        currentState.state = RoundState.stateFinished;
-        SetState(new RoundState(RoundState.stateStarting));
+        //currentState = RoundStateFinished;
+        SetState(RoundState.starting);
     }
 	
 	// Update is called once per frame
@@ -98,13 +47,13 @@ public class GameManagerBomb : MonoBehaviour {
 
     void TogglePauseRound()
     {
-        if (currentState.state == RoundState.stateRunning)
+        if (currentState == RoundState.running)
         {
-            SetState(new RoundState(RoundState.statePaused));
+            SetState(RoundState.paused);
         }
-        else if (currentState.state == RoundState.statePaused)
+        else if (currentState == RoundState.paused)
         {
-            SetState(new RoundState(RoundState.stateUnPausing));
+            SetState(RoundState.unPausing);
         }
     }
 
@@ -116,7 +65,7 @@ public class GameManagerBomb : MonoBehaviour {
     void UnPauseRound()
     {
         bomb.GetComponent<BombController>().UnPause();
-        SetState(new RoundState(RoundState.stateRunning));
+        SetState(RoundState.running);
     }
 
     void ResetTimers()
@@ -126,7 +75,7 @@ public class GameManagerBomb : MonoBehaviour {
 
     void IncrementTimers(float deltaTime)
     {
-        if (currentState.state == RoundState.stateRunning)
+        if (currentState == RoundState.running)
         {
             timeElapsed += deltaTime;
         }
@@ -135,27 +84,27 @@ public class GameManagerBomb : MonoBehaviour {
     void SetState(RoundState newState)
     {
         // State Transition Validation Logic
-        if (currentState.state == RoundState.stateStarting && newState.state != RoundState.stateRunning)
+        if (currentState == RoundState.starting && newState != RoundState.running)
         {
             MyLog("Invalid round state transition");
         }
 
-        if (currentState.state == RoundState.stateRunning && (newState.state != RoundState.statePaused && newState.state != RoundState.stateFinished))
+        if (currentState == RoundState.running && (newState != RoundState.paused && newState != RoundState.finished))
         {
             MyLog("Invalid round state transition");
         }
 
-        if (currentState.state == RoundState.statePaused && newState.state != RoundState.stateUnPausing)
+        if (currentState == RoundState.paused && newState != RoundState.unPausing)
         {
             MyLog("Invalid round state transition");
         }
 
-        if (currentState.state == RoundState.stateUnPausing && (newState.state != RoundState.stateRunning && newState.state != RoundState.stateFinished))
+        if (currentState == RoundState.unPausing && (newState != RoundState.running && newState != RoundState.finished))
         {
             MyLog("Invalid round state transition");
         }
 
-        if (currentState.state == RoundState.stateFinished && newState.state != RoundState.stateStarting)
+        if (currentState == RoundState.finished && newState != RoundState.starting)
         {
             MyLog("Invalid round state transition");
         }
@@ -164,27 +113,27 @@ public class GameManagerBomb : MonoBehaviour {
         currentState = newState;
 
         // Actions to do AFTER updating the currentState
-        if (newState.state == RoundState.stateStarting)
+        if (newState == RoundState.starting)
         {
             MyLog(newState.ToString());
             ResetTimers();
             bomb.GetComponent<BombController>().Arm();
         }
-        else if (newState.state == RoundState.stateRunning)
+        else if (newState == RoundState.running)
         {
             MyLog(newState.ToString());
         }
-        else if (newState.state == RoundState.statePaused)
+        else if (newState == RoundState.paused)
         {
             MyLog(newState.ToString());
             PauseRound();
         }
-        else if (newState.state == RoundState.stateUnPausing)
+        else if (newState == RoundState.unPausing)
         {
             MyLog(newState.ToString());
             UnPauseRound();
         }
-        else if (newState.state == RoundState.stateFinished)
+        else if (newState == RoundState.finished)
         {
             MyLog(newState.ToString());
             bomb.GetComponent<BombController>().Explode();
@@ -197,15 +146,15 @@ public class GameManagerBomb : MonoBehaviour {
 
     void HandleRoundState()
     {
-        if (currentState.state == RoundState.stateStarting)
+        if (currentState == RoundState.starting)
         {
-            SetState(new RoundState(RoundState.stateRunning));
+            SetState(RoundState.running);
         }
-        else if (currentState.state == RoundState.stateRunning)
+        else if (currentState == RoundState.running)
         {
             if (timeElapsed > maxRoundTime)
             {
-                SetState(new RoundState(RoundState.stateFinished));
+                SetState(RoundState.finished);
             }
         }
     }

@@ -3,57 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BombState
-{
-    public const int stateArmed = 0;
-    public const int stateExploding = 1;
-    public const int stateExploded = 2;
-    public const int statePaused = 3;
-    public const int stateUnPausing = 4;
-
-    public int state;
-
-    public BombState ()
-    {
-        
-    }
-
-    public BombState (int newState)
-    {
-        state = newState;
-    }
-
-    public override string ToString ()
-    {
-        string msg = "";
-        if (state == stateArmed)
-        {
-            msg = "ARMED";
-        }
-        else if (state == stateExploding)
-        {
-            msg = "EXPLODING";
-        }
-        else if (state == stateExploded)
-        {
-            msg = "EXPLODED";
-        }
-        else if (state == statePaused)
-        {
-            msg = "PAUSED";
-        }
-        else if (state == stateUnPausing)
-        {
-            msg = "UNPAUSING";
-        }
-        else
-        {
-            msg = "UNKNOWN";
-        }
-        return msg;
-    }
-}
-
 public class BombController : MonoBehaviour {
 
     // UI
@@ -69,8 +18,8 @@ public class BombController : MonoBehaviour {
     public float timeElapsedExploded;
     public float maxTimeElapsedExploding = 2;
     public float maxTimeElapsedExploded = 3;
-    public BombState currentState = new BombState(); // Can be ARMED, EXPLODING, EXPLODED, PAUSED
-    public BombState beforePauseState;
+    public BombState currentState = BombState.paused; // Can be ARMED, EXPLODING, EXPLODED, PAUSED
+    public BombState beforePauseState = BombState.isNull;
     public Vector3 beforePauseVelocity;
     public Vector3 beforePauseAngularVelocity;
     private bool unpausing;
@@ -78,9 +27,12 @@ public class BombController : MonoBehaviour {
     public Transform spawnPoint; // Spawn point
     public GameObject gameManager;
 
+    public GameObject explosionEffect;
+
     // Use this for initialization
     void Awake () {
-        currentState.state = BombState.statePaused;
+        //currentState.myState = BombState.statePaused; //Moved this to variable declaration
+        maxTimeElapsedExploding = explosionEffect.GetComponent<ParticleSystem>().main.duration;
         UpdateUI();
 	}
 
@@ -93,15 +45,15 @@ public class BombController : MonoBehaviour {
 
     void IncrementTimers (float deltaTime)
     {
-        if (currentState.state == BombState.stateArmed)
+        if (currentState == BombState.armed)
         {
             timeElapsedArmed += deltaTime;
         }
-        else if (currentState.state == BombState.stateExploding)
+        else if (currentState == BombState.exploding)
         {
             timeElapsedExploding += deltaTime;
         }
-        else if (currentState.state == BombState.stateExploded)
+        else if (currentState == BombState.exploded)
         {
             timeElapsedExploded += deltaTime;
         }
@@ -110,32 +62,32 @@ public class BombController : MonoBehaviour {
     void SetState (BombState newState)
     {
         // State Transition Validation Logic
-        if (currentState.state == BombState.stateArmed && newState.state != BombState.stateExploding && newState.state != BombState.statePaused)
+        if (currentState == BombState.armed && newState != BombState.exploding && newState != BombState.paused)
         {
             MyLog("Invalid bomb state transition");
         }
 
-        if (currentState.state == BombState.stateExploding && newState.state != BombState.stateExploded)
+        if (currentState == BombState.exploding && newState != BombState.exploded)
         {
             MyLog("Invalid bomb state transition");
         }
 
-        if (currentState.state == BombState.stateExploded && newState.state != BombState.stateArmed)
+        if (currentState == BombState.exploded && newState != BombState.armed)
         {
             MyLog("Invalid bomb state transition");
         }
 
-        if (currentState.state == BombState.statePaused && newState.state != BombState.stateUnPausing)
+        if (currentState == BombState.paused && newState != BombState.unPausing && newState != BombState.armed)
         {
             MyLog("Invalid bomb state transition");
         }
 
-        // Special validations
-        if (newState.state == BombState.stateArmed && gameManager.GetComponent<GameManagerBomb>().currentState.state == RoundState.stateFinished)
-        {
-            // If round ended don't allow re-arming of bomb
-            return;
-        }
+        //// Special validations
+        //if (newState == BombState.armed && gameManager.GetComponent<GameManagerBomb>().currentState == RoundState.finished)
+        //{
+        //    // If round ended don't allow re-arming of bomb
+        //    return;
+        //}
 
         // Store the previousState
         BombState previousState = currentState;
@@ -143,7 +95,7 @@ public class BombController : MonoBehaviour {
         currentState = newState;
 
         // Actions to do AFTER updating the currentState
-        if (newState.state == BombState.stateArmed)
+        if (newState == BombState.armed)
         {
             MyLog(newState.ToString());
             if (! unpausing)
@@ -153,28 +105,41 @@ public class BombController : MonoBehaviour {
                 currentExplodeTime = Random.Range(minBombExplodeTime, maxBombExplodeTime);
                 currentExplodeTimeYellow = ((float)currentExplodeTime) / 3; // One third
                 currentExplodeTimeRed = currentExplodeTimeYellow * 2; // Two thirds
+                gameObject.GetComponent<Renderer>().enabled = true;
             }
             else
             {
                 unpausing = false;
             }
         }
-        else if (newState.state == BombState.stateExploding)
+        else if (newState == BombState.exploding)
         {
             MyLog(newState.ToString());
+            gameObject.GetComponent<Renderer>().enabled = false;
+            explosionEffect.GetComponent<ParticleSystem>().Play();
+            //Debug.Log("Looping: " + explosionEffect.GetComponent<ParticleSystem>().main.loop);
             StopMovement();
         }
-        else if (newState.state == BombState.stateExploded)
+        else if (newState == BombState.exploded)
         {
             MyLog(newState.ToString());
+            explosionEffect.GetComponent<ParticleSystem>().Stop();
         }
-        else if (newState.state == BombState.statePaused)
+        else if (newState == BombState.paused)
         {
             MyLog(newState.ToString());
+            if (beforePauseState == BombState.exploding)
+            {
+                explosionEffect.GetComponent<ParticleSystem>().Pause();// playbackSpeed = 0f;
+            }
         }
-        else if (newState.state == BombState.stateUnPausing)
+        else if (newState == BombState.unPausing)
         {
             MyLog(newState.ToString());
+            if (beforePauseState == BombState.exploding)
+            {
+                explosionEffect.GetComponent<ParticleSystem>().Play(); // playbackSpeed = 1f;
+            }
             unpausing = true;
             SetState(beforePauseState);
         }
@@ -186,36 +151,37 @@ public class BombController : MonoBehaviour {
 
     public void Arm()
     {
-        SetState(new BombState(BombState.stateArmed));
+        BombState newState = BombState.armed;
+        SetState(newState);
     }
 
     public void Pause()
     {
         // Store the current values for pause state, velocity and angularVelocity
-        beforePauseState = new BombState(currentState.state);
+        beforePauseState = currentState;
         beforePauseVelocity = new Vector3(this.GetComponent<Rigidbody>().velocity.x, this.GetComponent<Rigidbody>().velocity.y, this.GetComponent<Rigidbody>().velocity.z);
         beforePauseAngularVelocity = new Vector3(this.GetComponent<Rigidbody>().angularVelocity.x, this.GetComponent<Rigidbody>().angularVelocity.y, this.GetComponent<Rigidbody>().angularVelocity.z);
         // Stop all forces on bomb
         this.GetComponent<Rigidbody>().velocity = Vector3.zero;
         this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
-        SetState(new BombState(BombState.statePaused));
+        SetState(BombState.paused);
     }
 
     public void UnPause()
     {
-        if (beforePauseState != null)
+        if (beforePauseState != BombState.isNull)
         {
             this.GetComponent<Rigidbody>().velocity = beforePauseVelocity;
             this.GetComponent<Rigidbody>().angularVelocity = beforePauseAngularVelocity;
 
-            SetState(new BombState(BombState.stateUnPausing));
+            SetState(BombState.unPausing);
         }
     }
 
     public void Explode()
     {
-        SetState(new BombState(BombState.stateExploding));
+        SetState(BombState.exploding);
     }
 
     public void VoidCollided()
@@ -240,11 +206,11 @@ public class BombController : MonoBehaviour {
 	
     void HandleBombState()
     {
-        if (currentState.state == BombState.stateArmed)
+        if (currentState == BombState.armed)
         {
             if (timeElapsedArmed > currentExplodeTime)
             {
-                SetState(new BombState(BombState.stateExploding));
+                SetState(BombState.exploding);
             }
             else
             {
@@ -263,18 +229,18 @@ public class BombController : MonoBehaviour {
                 }
             }
         }
-        else if (currentState.state == BombState.stateExploding)
+        else if (currentState == BombState.exploding)
         {
             if (timeElapsedExploding > maxTimeElapsedExploding)
             {
-                SetState(new BombState(BombState.stateExploded));
+                SetState(BombState.exploded);
             }
         }
-        else if (currentState.state == BombState.stateExploded)
+        else if (currentState == BombState.exploded)
         {
             if (timeElapsedExploded > maxTimeElapsedExploded)
             {
-                SetState(new BombState(BombState.stateArmed));
+                SetState(BombState.armed);
             }
         }
     }

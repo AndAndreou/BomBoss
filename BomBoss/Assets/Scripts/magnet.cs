@@ -27,7 +27,8 @@ public class magnet : MonoBehaviour {
                 float d = Vector3.Distance(trigger.gameObject.transform.position, this.transform.position);
                 Rigidbody r = trigger.gameObject.GetComponent<Rigidbody>();
                 r.AddForce(v.normalized * force / d);
-                Debug.Log(v.normalized * force / d);
+                Vector3 vAddForce = v.normalized * force / d;
+                MyLog(vAddForce.ToString());
             }
         }
 		
@@ -59,4 +60,8 @@ public class magnet : MonoBehaviour {
         }
     }
 
+    void MyLog(string msg)
+    {
+        Debug.Log(string.Format("Manget-{0}", msg));
+    }
 }
