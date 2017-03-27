@@ -16,6 +16,8 @@ public class GameManagerBomb : MonoBehaviour {
 
     public RoundState currentState = RoundState.finished; // Can be STARTING, RUNNING, PAUSED, FINISHED
 
+    private BombState bombState;
+
     // Use this for initialization
     void Start () {
         offset = transform.position - bomb.transform.position;
@@ -162,5 +164,14 @@ public class GameManagerBomb : MonoBehaviour {
     void MyLog(string msg)
     {
         Debug.Log(string.Format("GameManager-{0}", msg));
+    }
+
+    public void SetBombState(BombState bs)
+    {
+        bombState = bs;
+    }
+    public BombState GetBombState()
+    {
+        return bombState;
     }
 }

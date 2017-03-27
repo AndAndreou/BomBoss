@@ -5,9 +5,11 @@ using UnityEngine;
 public class Attach : MonoBehaviour {
 
     private bool enableTake;
+    private GameManagerBomb gm;
 
     // Use this for initialization
     void Start () {
+        gm = GameObject.FindWithTag(GameRepository.gameManagerTag).GetComponent<GameManagerBomb>();
         enableTake = false;
     }
 	
@@ -16,6 +18,14 @@ public class Attach : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.M))
         {
             enableTake = !enableTake;
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (gm.GetBombState() == BombState.exploding)
+        {
+            enableTake = false;
         }
     }
 

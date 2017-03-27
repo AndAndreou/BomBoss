@@ -25,12 +25,14 @@ public class BombController : MonoBehaviour {
     private bool unpausing;
 
     public Transform spawnPoint; // Spawn point
-    public GameObject gameManager;
+    private GameManagerBomb gameManager;
 
     public GameObject explosionEffect;
 
     // Use this for initialization
     void Awake () {
+
+        gameManager = GameObject.FindWithTag(GameRepository.gameManagerTag).GetComponent<GameManagerBomb>();
         //currentState.myState = BombState.statePaused; //Moved this to variable declaration
         maxTimeElapsedExploding = explosionEffect.GetComponent<ParticleSystem>().main.duration;
         UpdateUI();
@@ -83,7 +85,7 @@ public class BombController : MonoBehaviour {
         }
 
         // Special validations
-        if (newState == BombState.armed && gameManager.GetComponent<GameManagerBomb>().currentState == RoundState.finished)
+        if (newState == BombState.armed && gameManager.currentState == RoundState.finished)
         {
             // If round ended don't allow re-arming of bomb
             return;
@@ -93,6 +95,8 @@ public class BombController : MonoBehaviour {
         BombState previousState = currentState;
         // Update the currentState
         currentState = newState;
+
+        gameManager.SetBombState(currentState);
 
         // Actions to do AFTER updating the currentState
         if (newState == BombState.armed)
@@ -122,7 +126,7 @@ public class BombController : MonoBehaviour {
         {
             MyLog(newState.ToString());
             // Detach bomb from car
-            this.GetComponent<BombHover>().Respawn(spawnPoint.position);
+            //this.GetComponent<BombHover>().Respawn(spawnPoint.position);
             gameObject.GetComponent<Renderer>().enabled = false;
             explosionEffect.GetComponent<ExplosionController>().PlayEffect();
             //explosionEffect.GetComponent<ParticleSystem>().Play();

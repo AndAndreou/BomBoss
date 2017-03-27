@@ -5,24 +5,31 @@ using UnityEngine;
 public class Magnet : MonoBehaviour {
 
     public LayerMask includeLayers;
-
-    List<Collider> TriggerList = new List<Collider>();
     public float force;
 
-   
-	// Use this for initialization
-	void Start () {
-        
-	}
+    List<Collider> TriggerList = new List<Collider>();
+    private GameManagerBomb gm;
+
+
+    // Use this for initialization
+    void Start () {
+        gm = GameObject.FindWithTag(GameRepository.gameManagerTag).GetComponent<GameManagerBomb>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
 
-        foreach(Collider trigger in TriggerList)
+        List<Collider> tempList = new List<Collider>(TriggerList);
+        foreach (Collider trigger in tempList)
         {
             BombHover bh = trigger.GetComponent<BombHover>();
             if ((bh == null) || ((bh != null) &&(bh.setAttachPoint ==false)))
             {
+                if((bh != null) && (gm.GetBombState() == BombState.exploding))
+                {
+                    Detach(trigger);
+                    continue;
+                }
                 Vector3 v = this.transform.position - trigger.gameObject.transform.position;
                 float d = Vector3.Distance(trigger.gameObject.transform.position, this.transform.position);
                 Rigidbody r = trigger.gameObject.GetComponent<Rigidbody>();
@@ -43,6 +50,7 @@ public class Magnet : MonoBehaviour {
     //called when something exits the trigger
     void OnTriggerExit(Collider other)
     {
+        
         Detach(other);
     }
 
@@ -59,17 +67,17 @@ public class Magnet : MonoBehaviour {
             }
         }
     }
-
-    public void Detach(Collider other)
-    {
-        //if the object is in the list
-        if (TriggerList.Contains(other))
-        {
-            //remove it from the list
-            TriggerList.Remove(other);
-        }
-    }
-
+   
+   public void Detach(Collider other)
+   {
+       //if the object is in the list
+       if (TriggerList.Contains(other))
+       {
+           //remove it from the list
+           TriggerList.Remove(other);
+       }
+   }
+   
     void MyLog(string msg)
     {
         Debug.Log(string.Format("Magnet-{0}", msg));
