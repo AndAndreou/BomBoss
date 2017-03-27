@@ -22,9 +22,14 @@ public class Elevator : MonoBehaviour {
     {
         if (other.transform.tag == GameRepository.hovercraftTag)
         {
-            Debug.Log("test1");
+            Debug.Log("GoUp");
             goUp = true;
             animator.SetBool("GoUp", goUp);
         }
+    }
+
+    void MyLog(string msg)
+    {
+        Debug.Log(string.Format("Elevator-{0}", msg));
     }
 }

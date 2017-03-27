@@ -25,11 +25,11 @@ public class Attach : MonoBehaviour {
         {
             if (enableTake)
             {
+                other.GetComponent<BombHover>().Attach(this.transform.position);
+
                 //other.GetComponent<Rigidbody>().isKinematic = true;
                 //Destroy(other.GetComponent<Rigidbody>());
                 //other.transform.position = this.transform.position;
-                other.GetComponent<BombHover>().attachPoint = this.transform.position;
-                other.GetComponent<BombHover>().setAttachPoint = true;
                 //other.transform.SetParent(this.transform);
             }
         }
@@ -41,7 +41,8 @@ public class Attach : MonoBehaviour {
         {
             if (enableTake)
             {
-                other.GetComponent<BombHover>().setAttachPoint = false;
+                other.GetComponent<BombHover>().Detach();
+
                 //other.gameObject.AddComponent<Rigidbody>();
                 //other.GetComponent<Rigidbody>().isKinematic = false;
                 //other.transform.SetParent(null);

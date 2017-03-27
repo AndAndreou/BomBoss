@@ -9,18 +9,21 @@ public class BombHover : MonoBehaviour {
 
     public LayerMask raycastMask;
 
-    private Rigidbody rigidbody;
+    private Rigidbody myrigidbody;
 
     [HideInInspector]
     public Vector3 attachPoint;
     [HideInInspector]
     public bool setAttachPoint;
+    private bool respawn;
 
+    public Magnet magnet;
 
     void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        myrigidbody = GetComponent<Rigidbody>();
         setAttachPoint = false;
+        respawn = false;
     }
 
     private void OnTriggerStay(Collider other)
@@ -40,27 +43,52 @@ public class BombHover : MonoBehaviour {
     */
     // Update is called once per frame
     void FixedUpdate() {
-        rigidbody = GetComponent<Rigidbody>();
-        if (setAttachPoint ==true)
+        //myrigidbody = GetComponent<Rigidbody>(); //Was called on awake not needed here
+        if (setAttachPoint == true)
         {
             //this.transform.position = attachPoint;
-            rigidbody.velocity = (attachPoint - this.transform.position) / Time.deltaTime ;
+            myrigidbody.velocity = (attachPoint - this.transform.position) / Time.deltaTime ;
            // rigidbody.AddForce(attachPoint - this.transform.position);
             return;
         }
 
-        Ray ray = new Ray(transform.position, new Vector3(transform.position.x, transform.position.y-1000f, transform.position.z));
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, hoverHeight, raycastMask))
+        if (!respawn)
         {
-            if (hit.transform.tag != GameRepository.hovercraftTag)
+            Ray ray = new Ray(transform.position, new Vector3(transform.position.x, transform.position.y - 1000f, transform.position.z));
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, hoverHeight, raycastMask))
             {
-                float proportionalHeight = (hoverHeight - hit.distance) / hoverHeight;
-                Vector3 appliedHoverForce = Vector3.up * proportionalHeight * hoverForce;
-                rigidbody.AddForce(appliedHoverForce, ForceMode.Acceleration);
+                if (hit.transform.tag != GameRepository.hovercraftTag)
+                {
+                    float proportionalHeight = (hoverHeight - hit.distance) / hoverHeight;
+                    Vector3 appliedHoverForce = Vector3.up * proportionalHeight * hoverForce;
+                    myrigidbody.AddForce(appliedHoverForce, ForceMode.Acceleration);
+                }
             }
         }
     }
 
+    public void Attach(Vector3 myAttachPoint)
+    {
+        attachPoint = myAttachPoint;
+        setAttachPoint = true;
+        respawn = false;
+    }
+
+    public void Detach()
+    {
+        setAttachPoint = false;
+        respawn = false;
+    }
+
+    public void Respawn(Vector3 mySpawnPoint)
+    {
+        
+        // Completely release bomb
+        magnet.Detach(GetComponent<Collider>());
+        attachPoint = mySpawnPoint;
+        setAttachPoint = false;
+        respawn = true;
+    }
 }

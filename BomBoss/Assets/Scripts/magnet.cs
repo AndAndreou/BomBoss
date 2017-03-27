@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class magnet : MonoBehaviour {
+public class Magnet : MonoBehaviour {
 
     public LayerMask includeLayers;
 
@@ -37,6 +37,17 @@ public class magnet : MonoBehaviour {
      //called when something enters the trigger
      void OnTriggerEnter(Collider other)
     {
+        Attach(other);
+    }
+
+    //called when something exits the trigger
+    void OnTriggerExit(Collider other)
+    {
+        Detach(other);
+    }
+
+    public void Attach(Collider other)
+    {
         if (((1 << other.gameObject.layer) & includeLayers) != 0)
         {
 
@@ -49,8 +60,7 @@ public class magnet : MonoBehaviour {
         }
     }
 
-    //called when something exits the trigger
-    void OnTriggerExit(Collider other)
+    public void Detach(Collider other)
     {
         //if the object is in the list
         if (TriggerList.Contains(other))
@@ -62,6 +72,6 @@ public class magnet : MonoBehaviour {
 
     void MyLog(string msg)
     {
-        Debug.Log(string.Format("Manget-{0}", msg));
+        Debug.Log(string.Format("Magnet-{0}", msg));
     }
 }

@@ -121,6 +121,8 @@ public class BombController : MonoBehaviour {
         else if (newState == BombState.exploding)
         {
             MyLog(newState.ToString());
+            // Detach bomb from car
+            this.GetComponent<BombHover>().Respawn(spawnPoint.position);
             gameObject.GetComponent<Renderer>().enabled = false;
             explosionEffect.GetComponent<ExplosionController>().PlayEffect();
             //explosionEffect.GetComponent<ParticleSystem>().Play();
