@@ -12,6 +12,7 @@ public class ShipController : MonoBehaviour {
     public float overheatTotal;
     public int maxOverheat = 100;
     public float cooldownRate;
+    public float cooldownAmount;
 
     private bool isOverheated = false;
     private float nextFire;
@@ -32,7 +33,8 @@ public class ShipController : MonoBehaviour {
         if (Input.GetButton("Fire1") && (Time.time > nextFire) && (isOverheated == false))
         {
             nextFire = Time.time + fireRate; //Set the next available time for firing a missile
-            Instantiate(shot, shotSpawn.position, shotSpawn.rotation); //spawn a missile
+            GameObject go = Instantiate(shot, shotSpawn.position, shotSpawn.rotation); //spawn a missile
+            go.GetComponent<shot>().perentTransform = this.transform;
             overheatTotal += overheatRate; //Everytime the cannon fires, it's heat rises
 
             //check if the cannon has reached maximum overheat and needs to cool down
@@ -66,7 +68,7 @@ public class ShipController : MonoBehaviour {
     //used for cannon mechanics
     void cannonCooldown()
     {
-        overheatTotal -= overheatRate;//reduce the overheat every second
+        overheatTotal -= cooldownAmount;//reduce the overheat every second
         //When overheat reaches 0 (or below 0) then set the counter to 0 and change the flag. Player can now fire again
         if (overheatTotal <= 0)
         {

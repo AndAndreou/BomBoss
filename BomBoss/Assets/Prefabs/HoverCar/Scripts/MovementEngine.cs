@@ -62,6 +62,9 @@ public class MovementEngine : MonoBehaviour
 
     private SideDependentDrag m_Drag;
 
+    //particle system
+    public ParticleSystem exhaustBoostParticle;
+
     void Start()
     {
         Rigidbody = Rigidbody ?? GetComponent<Rigidbody>();
@@ -127,6 +130,16 @@ public class MovementEngine : MonoBehaviour
 
         // apply total force, using acceleration mode so we don't depend on mass
         Rigidbody.AddForce(fwd * force, ForceMode.Acceleration);
+
+        //play particle for boost
+        if((MaxSpeed>25)&&(thrust>0)&&(exhaustBoostParticle.isPlaying == false))
+        {
+            exhaustBoostParticle.Play();
+        }
+        else if (((MaxSpeed <= 25) || (thrust <= 0)) && (exhaustBoostParticle.isPlaying == true))
+        {
+            exhaustBoostParticle.Stop();
+        }
     }
 
     private float GetDrag(float speed)
