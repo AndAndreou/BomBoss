@@ -29,6 +29,8 @@ public class BombController : MonoBehaviour {
 
     public GameObject explosionEffect;
 
+    List<Collider> triggerList = new List<Collider>();
+
     // Use this for initialization
     void Awake () {
 
@@ -129,6 +131,21 @@ public class BombController : MonoBehaviour {
             //this.GetComponent<BombHover>().Respawn(spawnPoint.position);
             gameObject.GetComponent<Renderer>().enabled = false;
             explosionEffect.GetComponent<ExplosionController>().PlayEffect();
+
+            foreach (Collider col in triggerList)
+            {
+                ExplodeController expControl = null;
+                expControl = col.GetComponent<ExplodeController>();
+
+                if (expControl != null)
+                {
+                    expControl.Explode();
+                }
+            }
+
+            // Clear list of collided objects after explosion
+            triggerList.Clear();
+
             //explosionEffect.GetComponent<ParticleSystem>().Play();
             //Debug.Log("Looping: " + explosionEffect.GetComponent<ParticleSystem>().main.loop);
             StopMovement();
@@ -288,6 +305,40 @@ public class BombController : MonoBehaviour {
     //    }
     //}
 
+    //called when something enters the trigger
+    void OnTriggerEnter(Collider other)
+    {
+        Attach(other);
+    }
+
+    //called when something exits the trigger
+    void OnTriggerExit(Collider other)
+    {
+        Detach(other);
+    }
+
+    public void Attach(Collider other)
+    {
+        //if the object is not already in the list and bomb is armed
+        if (!triggerList.Contains(other) && currentState == BombState.armed)
+        {
+            //add the object to the list
+            triggerList.Add(other);
+            MyLog("Attach:" + other.name);
+        }
+    }
+
+    public void Detach(Collider other)
+    {
+        //if the object is in the list
+        if (triggerList.Contains(other))
+        {
+            //remove it from the list
+            triggerList.Remove(other);
+            MyLog("Detach:" + other.name);
+        }
+    }
+
     void UpdateUI ()
     {
         bombInfoText.text = string.Format("Bomb Status: {0} TimerArmed: {1:00.00} TimerExploding: {2:00.00} TimerExploded: {3:00.00}", currentState.ToString(), timeElapsedArmed, timeElapsedExploding, timeElapsedExploded);
@@ -295,6 +346,6 @@ public class BombController : MonoBehaviour {
 
     void MyLog(string msg)
     {
-        //Debug.Log(string.Format("Bomb-{0}", msg));
+        Debug.Log(string.Format("Bomb-{0}", msg));
     }
 }

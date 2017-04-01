@@ -76,15 +76,6 @@
     <Reference Include="Mono.Cecil">
       <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Packages\UnityParticlePack\EffectExamples\Shared\Scripts\DecalDestroyer.cs" />
@@ -110,12 +101,17 @@
     <Compile Include="Assets\Prefabs\HoverCar\Scripts\TurbineRotation.cs" />
     <Compile Include="Assets\Scripts\Attach.cs" />
     <Compile Include="Assets\Scripts\BombHover.cs" />
+    <Compile Include="Assets\Scripts\DoorController.cs" />
     <Compile Include="Assets\Scripts\Doors.cs" />
     <Compile Include="Assets\Scripts\Elevator.cs" />
     <Compile Include="Assets\Scripts\ElevatorParent.cs" />
     <Compile Include="Assets\Scripts\Enums\BombState.cs" />
+    <Compile Include="Assets\Scripts\Enums\GoalPosition.cs" />
+    <Compile Include="Assets\Scripts\Enums\MyObjectType.cs" />
     <Compile Include="Assets\Scripts\Enums\PowerUpType.cs" />
     <Compile Include="Assets\Scripts\Enums\RoundState.cs" />
+    <Compile Include="Assets\Scripts\Enums\Team.cs" />
+    <Compile Include="Assets\Scripts\ExplodeController.cs" />
     <Compile Include="Assets\Scripts\GameRepository.cs" />
     <Compile Include="Assets\Scripts\MichalisScene\CameraSmoothFollow.cs" />
     <Compile Include="Assets\Scripts\MichalisScene\PowerUps.cs" />

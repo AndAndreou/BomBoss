@@ -10,6 +10,7 @@ public class GameManagerBomb : MonoBehaviour {
 
     // UI
     public Text roundInfoText;
+    public Text goalInfoText;
     // Times
     public int maxRoundTime = 120; // secs
     public float timeElapsed;
@@ -17,6 +18,17 @@ public class GameManagerBomb : MonoBehaviour {
     public RoundState currentState = RoundState.finished; // Can be STARTING, RUNNING, PAUSED, FINISHED
 
     private BombState bombState;
+
+    [System.Serializable]
+    public struct GoalStruct
+    {
+        public GameObject leftDoor;
+        public GameObject centerDoor;
+        public GameObject rightDoor;
+    }
+
+    public GoalStruct blueDoors;
+    public GoalStruct redDoors;
 
     // Use this for initialization
     void Start () {
@@ -45,6 +57,7 @@ public class GameManagerBomb : MonoBehaviour {
     void UpdateUI()
     {
         roundInfoText.text = string.Format("Round Status: {0} Timer: {1:00.00}", currentState.ToString(), timeElapsed);
+        goalInfoText.text = string.Format("Blue L:{0} C:{1} R:{2}       Red L:{3} C:{4} R:{5}", blueDoors.leftDoor.activeSelf, blueDoors.centerDoor.activeSelf, blueDoors.rightDoor.activeSelf, redDoors.leftDoor.activeSelf, redDoors.centerDoor.activeSelf, redDoors.rightDoor.activeSelf);
     }
 
     void TogglePauseRound()
@@ -173,5 +186,19 @@ public class GameManagerBomb : MonoBehaviour {
     public BombState GetBombState()
     {
         return bombState;
+    }
+
+    public void ObjectExploded(MyObjectType myType, GameObject myObject)
+    {
+        MyLog("Exploded:" + myType.ToString());
+        if (myType == MyObjectType.door)
+        {
+            GoalExploded(myObject);
+        }
+    } 
+
+    public void GoalExploded(GameObject myObject)
+    {
+
     }
 }
