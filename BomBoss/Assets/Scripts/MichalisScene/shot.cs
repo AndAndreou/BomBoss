@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shot : MonoBehaviour {
+public class shot : MonoBehaviour {
 
     public float shotSpeed;
     public float damageDealt;

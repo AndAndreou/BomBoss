@@ -73,18 +73,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Packages\UnityParticlePack\EffectExamples\Shared\Scripts\DecalDestroyer.cs" />
@@ -117,7 +105,6 @@
     <Compile Include="Assets\Scripts\Enums\PowerUpType.cs" />
     <Compile Include="Assets\Scripts\Enums\RoundState.cs" />
     <Compile Include="Assets\Scripts\GameRepository.cs" />
-    <Compile Include="Assets\Scripts\Magnet.cs" />
     <Compile Include="Assets\Scripts\MichalisScene\CameraSmoothFollow.cs" />
     <Compile Include="Assets\Scripts\MichalisScene\PowerUps.cs" />
     <Compile Include="Assets\Scripts\MichalisScene\ShipController.cs" />
@@ -128,6 +115,7 @@
     <Compile Include="Assets\Scripts\SergiosSceneBomb\ExplosionController.cs" />
     <Compile Include="Assets\Scripts\SergiosSceneBomb\GameManagerBomb.cs" />
     <Compile Include="Assets\Scripts\SergiosSceneBomb\VoidController.cs" />
+    <Compile Include="Assets\Scripts\magnet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packages\UnityParticlePack\EffectExamples\Shared\Shaders\SurfaceShader_VC.shader" />

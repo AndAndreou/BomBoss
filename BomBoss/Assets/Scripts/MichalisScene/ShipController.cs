@@ -66,7 +66,7 @@ public class ShipController : MonoBehaviour {
     //used for cannon mechanics
     void cannonCooldown()
     {
-        overheatTotal -= cooldownRate;//reduce the overheat every second
+        overheatTotal -= overheatRate;//reduce the overheat every second
         //When overheat reaches 0 (or below 0) then set the counter to 0 and change the flag. Player can now fire again
         if (overheatTotal <= 0)
         {

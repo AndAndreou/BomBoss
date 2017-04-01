@@ -13,7 +13,7 @@ public class ShipStatus : MonoBehaviour {
     public float currHealth;
 
     //for jumping
-    Vector3 jumpVector;
+    Vector3 jumpVector = Vector3.up;
     public float jumpForce;
     public float jumpsLeft;
     public bool hasJump = true;
@@ -27,12 +27,13 @@ public class ShipStatus : MonoBehaviour {
     //for boost
     public bool hasBoost = true;
     public float boostDuration;
-
+    public float maxTurboSpeed;
+    public float maxTurboAcceleration;
 
     // Use this for initialization
     void Start () {
         rigidbody = GetComponent<Rigidbody>();
-        jumpVector = new Vector3(0.0f, 1.0f, 0.0f);
+        //jumpVector = new Vector3(0.0f, 1.0f, 0.0f);
     }
 	
 	// Update is called once per frame
@@ -42,21 +43,28 @@ public class ShipStatus : MonoBehaviour {
 
     void FixedUpdate()
     {
-        /*
+        
         //Check input from user to activate the power-ups
         if (Input.GetKeyDown("b") && hasBoost)
         {
             print("B key was pressed, activated boost");
+           
             StartCoroutine(boostMe());
         }
-
-        if (Input.GetKeyDown("n") && hasJump && jumpsLeft > 0)
-        {
-            print("N key was pressed, activated jump");
+        
+       if (Input.GetKeyDown("n") && hasJump && jumpsLeft > 0)
+       {
+           print("N key was pressed, activated jump");
+           
+           rigidbody.AddForce(jumpVector * jumpForce, ForceMode.Impulse);
             jumpsLeft--;
-            rigidbody.AddForce(jumpVector * jumpForce, ForceMode.Impulse);// TO DO: make the jump smoother
-        }
+            if(jumpsLeft == 0)
+            {
+                hasJump = false;
+            }
 
+        }
+        /*
         if (Input.GetKeyDown("m") && hasShield)
         {
             print("M key was pressed, activated shield");
@@ -84,22 +92,22 @@ public class ShipStatus : MonoBehaviour {
 
         while (timePassed <= boostDuration) //check if the boost duration is over
         {
-            movementEngine.MaxSpeed = 40;
-            movementEngine.MaxForwardAcceleration = 40;
-            //accelaration = 5; //Had to use a hard-coded value. I tried to do: accelaration *= 5; but the value hit infinity. TODO find a better solution for this
+            gameObject.GetComponent<MovementEngine>().MaxForwardAcceleration = maxTurboAcceleration;
+            gameObject.GetComponent<MovementEngine>().MaxSpeed = maxTurboSpeed;
+            
             timePassed += Time.deltaTime; // increment our timer
             yield return null;
         }
 
         while (timePassed > 0) //used to return the value back to its original value over time
         {
-            movementEngine.MaxSpeed = 25;
-            movementEngine.MaxForwardAcceleration = 20;
-           // accelaration = 2; //TODO: find a better solution for this that is not hardcoded in
-            timePassed -= Time.deltaTime;
+            gameObject.GetComponent<MovementEngine>().MaxForwardAcceleration = 20;
+            gameObject.GetComponent<MovementEngine>().MaxSpeed = 25;
+            hasBoost = false;
+
             yield return null;
         }
-        hasBoost = false;
+        
 
     }//End of boostME IEnumerator
 
@@ -140,7 +148,9 @@ public class ShipStatus : MonoBehaviour {
                 Debug.Log("Jump: " + jumpsLeft);
                 break;
             case PowerUpType.boost:
-                boostDuration += value;
+                //this.hasBoost = true;
+                gameObject.GetComponent<ShipStatus>().hasBoost = true;
+               // boostDuration += value;
                 Debug.Log("Boost: " + boostDuration);
                 break;
         }
