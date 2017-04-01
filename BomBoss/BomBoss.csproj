@@ -108,11 +108,13 @@
     <Compile Include="Assets\Scripts\Enums\BombState.cs" />
     <Compile Include="Assets\Scripts\Enums\GoalPosition.cs" />
     <Compile Include="Assets\Scripts\Enums\MyObjectType.cs" />
+    <Compile Include="Assets\Scripts\Enums\MyPlayer.cs" />
     <Compile Include="Assets\Scripts\Enums\PowerUpType.cs" />
     <Compile Include="Assets\Scripts\Enums\RoundState.cs" />
     <Compile Include="Assets\Scripts\Enums\Team.cs" />
     <Compile Include="Assets\Scripts\ExplodeController.cs" />
     <Compile Include="Assets\Scripts\GameRepository.cs" />
+    <Compile Include="Assets\Scripts\Magnet.cs" />
     <Compile Include="Assets\Scripts\MichalisScene\CameraSmoothFollow.cs" />
     <Compile Include="Assets\Scripts\MichalisScene\PowerUps.cs" />
     <Compile Include="Assets\Scripts\MichalisScene\ShipController.cs" />
@@ -123,7 +125,6 @@
     <Compile Include="Assets\Scripts\SergiosSceneBomb\ExplosionController.cs" />
     <Compile Include="Assets\Scripts\SergiosSceneBomb\GameManagerBomb.cs" />
     <Compile Include="Assets\Scripts\SergiosSceneBomb\VoidController.cs" />
-    <Compile Include="Assets\Scripts\magnet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packages\UnityParticlePack\EffectExamples\Shared\Shaders\SurfaceShader_VC.shader" />

@@ -19,6 +19,8 @@ public class ShipController : MonoBehaviour {
 
     public Transform shipSpawn; // Spawn position
 
+    public HoverControl hoverControl; // To fetch myPlayer
+
     // Use this for initialization
     void Start () {
 
@@ -30,7 +32,7 @@ public class ShipController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetButton("Fire1") && (Time.time > nextFire) && (isOverheated == false))
+        if (Input.GetButton("Shoot" + hoverControl.myPlayer.ToString()) && (Time.time > nextFire) && (isOverheated == false))
         {
             nextFire = Time.time + fireRate; //Set the next available time for firing a missile
             GameObject go = Instantiate(shot, shotSpawn.position, shotSpawn.rotation); //spawn a missile

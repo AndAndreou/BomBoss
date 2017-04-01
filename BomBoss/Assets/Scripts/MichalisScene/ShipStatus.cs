@@ -30,6 +30,8 @@ public class ShipStatus : MonoBehaviour {
     public float maxTurboSpeed;
     public float maxTurboAcceleration;
 
+    public HoverControl hoverControl; // To fetch myPlayer
+
     // Use this for initialization
     void Start () {
         rigidbody = GetComponent<Rigidbody>();
@@ -45,16 +47,16 @@ public class ShipStatus : MonoBehaviour {
     {
         
         //Check input from user to activate the power-ups
-        if (Input.GetKeyDown("b") && hasBoost)
+        if (Input.GetButtonDown("Boost" + hoverControl.myPlayer.ToString()) && hasBoost)
         {
-            print("B key was pressed, activated boost");
+            print("B boost key was pressed, activated boost");
            
             StartCoroutine(boostMe());
         }
         
-       if (Input.GetKeyDown("n") && hasJump && jumpsLeft > 0)
+       if (Input.GetButtonDown("Jump" + hoverControl.myPlayer.ToString()) && hasJump && jumpsLeft > 0)
        {
-           print("N key was pressed, activated jump");
+           print("N jump key was pressed, activated jump");
            
            rigidbody.AddForce(jumpVector * jumpForce, ForceMode.Impulse);
             jumpsLeft--;
@@ -65,9 +67,9 @@ public class ShipStatus : MonoBehaviour {
 
         }
         /*
-        if (Input.GetKeyDown("m") && hasShield)
+        if (Input.GetButtonDown("Shield"  + hoverControl.myPlayer.ToString()) && hasShield)
         {
-            print("M key was pressed, activated shield");
+            print("M shield key was pressed, activated shield");
             StartCoroutine(shieldMe());
         }
         */

@@ -14,9 +14,12 @@ public class HoverControl : MonoBehaviour
     /// </summary>
     public MovementEngine Movement;
 
+    // To tell which player this is
+    public MyPlayer myPlayer;
+
     void Update()
     {
-        Movement.Thrust = Input.GetAxis("Vertical");
-        Orientation.Turn = Input.GetAxis("Horizontal");
+        Movement.Thrust = Input.GetAxis("Vertical" + myPlayer.ToString());
+        Orientation.Turn = Input.GetAxis("Horizontal" + myPlayer.ToString());
     }
 }

@@ -7,6 +7,8 @@ public class Attach : MonoBehaviour {
     private bool enableTake;
     private GameManagerBomb gm;
 
+    public HoverControl hoverControl; // To fetch myPlayer
+
     // Use this for initialization
     void Start () {
         gm = GameObject.FindWithTag(GameRepository.gameManagerTag).GetComponent<GameManagerBomb>();
@@ -15,7 +17,7 @@ public class Attach : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetButtonDown("Magnet" + hoverControl.myPlayer.ToString()))
         {
             enableTake = !enableTake;
         }
