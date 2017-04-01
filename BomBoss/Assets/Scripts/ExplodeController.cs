@@ -10,7 +10,7 @@ public class ExplodeController : MonoBehaviour {
         MyLog(myType.ToString());
         if (myType == MyObjectType.hovercraft)
         {
-
+            this.gameObject.GetComponentInParent<ShipController>().Die();
         }
         else if (myType == MyObjectType.bomb)
         {
