@@ -99,7 +99,7 @@ public class ShipStatus : MonoBehaviour {
             yield return null;
         }
 
-        while (timePassed > 0) //used to return the value back to its original value over time
+        if (timePassed >= boostDuration) //used to return the value back to its original value over time
         {
             gameObject.GetComponent<MovementEngine>().MaxForwardAcceleration = 20;
             gameObject.GetComponent<MovementEngine>().MaxSpeed = 25;
@@ -144,12 +144,13 @@ public class ShipStatus : MonoBehaviour {
                 Debug.Log("Shield: " + currShieldHealth);
                 break;
             case PowerUpType.jump:
-                jumpsLeft += value;
+                jumpsLeft = 2;
+                hasJump = true;
                 Debug.Log("Jump: " + jumpsLeft);
                 break;
             case PowerUpType.boost:
                 //this.hasBoost = true;
-                gameObject.GetComponent<ShipStatus>().hasBoost = true;
+                hasBoost = true;
                // boostDuration += value;
                 Debug.Log("Boost: " + boostDuration);
                 break;

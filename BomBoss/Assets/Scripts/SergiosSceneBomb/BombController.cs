@@ -295,6 +295,6 @@ public class BombController : MonoBehaviour {
 
     void MyLog(string msg)
     {
-        Debug.Log(string.Format("Bomb-{0}", msg));
+        //Debug.Log(string.Format("Bomb-{0}", msg));
     }
 }
