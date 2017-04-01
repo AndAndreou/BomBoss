@@ -10,6 +10,11 @@ public class shot : MonoBehaviour {
     public GameObject mainProjectile;
     public ParticleSystem mainParticleSystem;
 
+    public GameObject sparkParticle;
+
+    [HideInInspector]
+    public Transform perentTransform;
+
     // Use this for initialization
     void Start()
     {
@@ -20,9 +25,22 @@ public class shot : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (mainParticleSystem.IsAlive() == false)
+        //if (mainParticleSystem.IsAlive() == false)
+        //{
+        //    mainProjectile.SetActive(false);
+        //}
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform != perentTransform)
         {
-            mainProjectile.SetActive(false);
+            sparkParticle.SetActive(true);
+            sparkParticle.GetComponent<ParticleSystem>().Play();
+            this.GetComponent<MeshRenderer>().enabled = false;
+            Destroy(this.GetComponent<Rigidbody>());
+            Destroy(this.gameObject, 1f);
         }
     }
+
 }
