@@ -19,7 +19,16 @@ public class HoverControl : MonoBehaviour
 
     void Update()
     {
-        Movement.Thrust = Input.GetAxis("Vertical" + myPlayer.ToString());
-        Orientation.Turn = Input.GetAxis("Horizontal" + myPlayer.ToString());
+        float vertical = Input.GetAxis("Vertical" + myPlayer.ToString());
+        float horizontal = Input.GetAxis("Horizontal" + myPlayer.ToString());
+
+        if (vertical < 0)
+        {
+            // Invert the horizontal movement if moving in reverse
+            horizontal *= -1;
+        }
+
+        Movement.Thrust = vertical;
+        Orientation.Turn = horizontal;
     }
 }
