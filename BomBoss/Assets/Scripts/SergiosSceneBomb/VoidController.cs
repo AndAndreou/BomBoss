@@ -36,11 +36,19 @@ public class VoidController : MonoBehaviour
         if (other.tag == GameRepository.hovercraftTag)
         {
             MyLog(string.Format("Collided with: {0}", other.tag));
-            GameObject ship = GameObject.Find("HoverCar");
-            if (ship != null)
+            // This is no good now because we have 4 hover cars
+            //GameObject ship = GameObject.Find("HoverCar");
+            //if (ship != null)
+            //{
+            //    ship.GetComponent<ShipController>().Die();
+            //}
+
+            ShipController shipController = other.GetComponentInParent<ShipController>();
+            if (shipController != null)
             {
-                ship.GetComponent<ShipController>().Die();
+                shipController.Die();
             }
+
         }
     }
 
