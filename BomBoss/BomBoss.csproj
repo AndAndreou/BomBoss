@@ -101,6 +101,7 @@
     <Compile Include="Assets\Prefabs\HoverCar\Scripts\TurbineRotation.cs" />
     <Compile Include="Assets\Scripts\Attach.cs" />
     <Compile Include="Assets\Scripts\BombHover.cs" />
+    <Compile Include="Assets\Scripts\CamerasController.cs" />
     <Compile Include="Assets\Scripts\DoorController.cs" />
     <Compile Include="Assets\Scripts\Doors.cs" />
     <Compile Include="Assets\Scripts\Elevator.cs" />
