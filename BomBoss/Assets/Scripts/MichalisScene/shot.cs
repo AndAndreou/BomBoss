@@ -6,6 +6,7 @@ public class shot : MonoBehaviour {
 
     public float shotSpeed;
     public float damageDealt;
+    public float hitForce = 100000f;
 
     public GameObject mainProjectile;
     public ParticleSystem mainParticleSystem;
@@ -33,6 +34,13 @@ public class shot : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.transform.tag == GameRepository.hovercraftTag)
+        {
+            Debug.Log("shot hit a player");
+            ShipStatus shipStatus = collision.gameObject.GetComponentInParent<ShipStatus>();
+            shipStatus.applyDamage(damageDealt);               
+        }
+
         if (collision.transform != perentTransform)
         {
             sparkParticle.SetActive(true);

@@ -9,7 +9,7 @@ public class ShipStatus : MonoBehaviour {
     Rigidbody rigidbody;
 
     //for Healing
-    public float maxHealth;
+    public float maxHealth = 100;
     public float currHealth;
 
     //for jumping
@@ -35,13 +35,15 @@ public class ShipStatus : MonoBehaviour {
     // Use this for initialization
     void Start () {
         rigidbody = GetComponent<Rigidbody>();
+        currHealth = maxHealth;
         //jumpVector = new Vector3(0.0f, 1.0f, 0.0f);
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        
+
+    }
 
     void FixedUpdate()
     {
@@ -83,7 +85,7 @@ public class ShipStatus : MonoBehaviour {
         if (currHealth <= 0)
         {
             currHealth = 0;
-            shipController.Die();           
+            gameObject.GetComponent<ShipController>().Die();
         }
     }
 
@@ -138,7 +140,7 @@ public class ShipStatus : MonoBehaviour {
         switch (powerUp)
         {
             case PowerUpType.health:
-                currHealth += value;
+                currHealth = maxHealth;
                 Debug.Log("Health: " + currHealth);
                 break;
             case PowerUpType.shield:

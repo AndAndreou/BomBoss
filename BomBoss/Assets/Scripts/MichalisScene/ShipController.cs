@@ -61,9 +61,11 @@ public class ShipController : MonoBehaviour {
 
         this.GetComponent<Rigidbody>().velocity = Vector3.zero;
         this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
-       
         gameObject.SetActive(true);
+
+        //re-initialize current health to max health when respawned
+        ShipStatus shipStatus = GetComponent<ShipStatus>();
+        shipStatus.currHealth = shipStatus.maxHealth;
        
     }
 
