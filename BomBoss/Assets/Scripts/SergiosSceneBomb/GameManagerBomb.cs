@@ -19,6 +19,9 @@ public class GameManagerBomb : MonoBehaviour {
 
     private BombState bombState;
 
+    [HideInInspector]
+    public float gameVolume = 1f;
+
     [System.Serializable]
     public struct GoalStruct
     {
